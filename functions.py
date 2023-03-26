@@ -53,7 +53,7 @@ def find_contour_aspect_ratio(contour,color_image):
     asint = np.int0(points)
     
     if len(asint) > 0:
-        cv2.drawContours(color_image,[asint],0,(0,255,0),5)
+        cv2.drawContours(color_image,[asint],0,(255,255,0),5)
         center, dimensions, angle= cv2.minAreaRect(contour)
         width,height = dimensions
         
