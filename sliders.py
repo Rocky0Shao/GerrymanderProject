@@ -5,7 +5,7 @@ import functions as f
 
 
 #change this to threshold different images
-target_image = "test1.jpg"
+target_image = "test2.jpg"
 
 
 #trackbar callback fucntion to update HSV value

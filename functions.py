@@ -7,7 +7,7 @@ import math
 
 
 
-def maskForTest1(input_image,a,b,c,d,e,f):
+def generate_mask(input_image,a,b,c,d,e,f):
     input_image_copy = cv2.cvtColor(input_image,cv2.COLOR_BGR2HSV)
     lower_blue = np.array([a,c,e])
     higher_blue = np.array([b,d,f])
@@ -16,13 +16,7 @@ def maskForTest1(input_image,a,b,c,d,e,f):
     mask = cv2.dilate(mask,kernal,iterations = 3)
     return mask
 
-def maskForTest2(input_image):
-    input_image_copy = cv2.cvtColor(input_image,cv2.COLOR_BGR2HSV)
-    lower_blue = np.array([0,76,0])
-    higher_blue = np.array([255,255,255])
-    mask = cv2.inRange(input_image_copy,lower_blue,higher_blue, cv2.THRESH_BINARY)
-    
-    return mask
+
 
 def find_contour_circle_radius(contour):
     contour_area = cv2.contourArea(contour)
