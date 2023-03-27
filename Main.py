@@ -41,17 +41,14 @@ high_S = 255
 low_V = 0
 high_V = 255
 
-<<<<<<< HEAD
 
 
 
-<<<<<<< HEAD:test1.py
+
 mask = f.maskForTest1(input_image,low_H,high_H,low_S,high_S,low_V,high_V)
-=======
-=======
->>>>>>> test
+
 mask = f.generate_mask(input_image,low_H,high_H,low_S,high_S,low_V,high_V)
->>>>>>> test:Main.py
+
 contours,_=cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
 contours = f.sort_contours(contours)
 for contour in contours:
