@@ -7,10 +7,10 @@ import math
 
 
 
-def maskForTest1(input_image):
+def maskForTest1(input_image,a,b,c,d,e,f):
     input_image_copy = cv2.cvtColor(input_image,cv2.COLOR_BGR2HSV)
-    lower_blue = np.array([85,43,93])
-    higher_blue = np.array([130,255,255])
+    lower_blue = np.array([a,c,e])
+    higher_blue = np.array([b,d,f])
     mask = cv2.inRange(input_image_copy,lower_blue,higher_blue, cv2.THRESH_BINARY)
     kernal = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
     mask = cv2.dilate(mask,kernal,iterations = 3)

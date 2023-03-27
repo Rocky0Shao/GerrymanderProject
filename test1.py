@@ -6,6 +6,16 @@ import functions as f
 #this file should take in test1.jpg and return the contiguos, compactness of the blue districts.
 input_image = cv2.imread("test1.jpg")
 
+
+low_H = 85
+high_H = 130
+
+low_S = 43
+high_S = 255
+
+low_V = 93
+high_V = 255
+
 h, w, _ = input_image.shape
 
 print(h, w)
