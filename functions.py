@@ -13,6 +13,7 @@ def generate_mask(input_image,a,b,c,d,e,f):
     higher_blue = np.array([b,d,f])
     mask = cv2.inRange(input_image_copy,lower_blue,higher_blue, cv2.THRESH_BINARY)
     kernal = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+    mask = cv2.erode(mask,kernal,iterations = 1)
     mask = cv2.dilate(mask,kernal,iterations = 3)
     return mask
 
@@ -27,6 +28,12 @@ def find_biggest_contour(contours):
     sortedContours = sorted(contours, key=lambda contour: -cv2.contourArea(contour))
     biggest_contour=sortedContours[0]
     return biggest_contour
+
+def sort_contours(contours):
+    sortedContours = sorted(contours, key=lambda contour: -cv2.contourArea(contour))
+    
+    return sortedContours
+
 
     
 def find_contour_center(contour):
