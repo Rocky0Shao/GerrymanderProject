@@ -22,7 +22,7 @@ print(h, w)
 
 
 
-mask = f.maskForTest1(input_image)
+mask = f.maskForTest1(input_image,low_H,high_H,low_S,high_S,low_V,high_V)
 contours,_=cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
 for contour in contours:
     cv2.drawContours(input_image,[contour],0,(0,255,0),3)
