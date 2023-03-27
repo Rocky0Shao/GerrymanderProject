@@ -15,7 +15,7 @@ print(h, w)
 mask = f.maskForTest2(input_image)
 contours,_=cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
 for contour in contours:
-    cv2.drawContours(input_image,[contour],0,(0,255,0),3)
+    cv2.drawContours(input_image,[contour],0,(0,0,255),3)
     aspect_ratio,width,height = f.find_contour_aspect_ratio(contour,input_image)
     circle_of_contor_radius = f.find_contour_circle_radius(contour)
     center = f.find_contour_center(contour)
@@ -27,7 +27,7 @@ for contour in contours:
     cv2.putText(input_image, f.format_num(float(f"{solidity}")*100), (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
 
 
-f.show_image("input_image",input_image)
+cv2.imshow("input_image",input_image)
 f.show_image("test1",mask)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
