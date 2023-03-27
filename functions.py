@@ -16,7 +16,18 @@ def maskForTest1(input_image):
     mask = cv2.dilate(mask,kernal,iterations = 3)
     return mask
 
+def maskForTest2(input_image):
+    input_image_copy = cv2.cvtColor(input_image,cv2.COLOR_BGR2HSV)
+    lower_blue = np.array([0,76,0])
+    higher_blue = np.array([255,255,255])
+    mask = cv2.inRange(input_image_copy,lower_blue,higher_blue, cv2.THRESH_BINARY)
+    
+    return mask
 
+def find_contour_circle_radius(contour):
+    contour_area = cv2.contourArea(contour)
+    contour_circle_radius = (contour_area /math.pi)**0.5
+    return int(contour_circle_radius)
 
 def find_biggest_contour(contours):
     sortedContours = sorted(contours, key=lambda contour: -cv2.contourArea(contour))
@@ -55,10 +66,12 @@ def find_contour_aspect_ratio(contour,color_image):
         cv2.drawContours(color_image,[asint],0,(255,255,0),3) #DRAWS BOXES
         center, dimensions, angle= cv2.minAreaRect(contour)
         width,height = dimensions
-        
-        ratio = height/width
-        if ratio > 1: ratio = width/height
-        return ratio*100,width,height
+        try:
+            ratio = height/width
+            if ratio > 1: ratio = width/height
+            return ratio*100,width,height
+        except:
+            return 0
     return 0
 
 def solidityTest(contour):
