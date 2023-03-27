@@ -28,6 +28,5 @@ for contour in contours:
 
 
 cv2.imshow("input_image",input_image)
-f.show_image("test1",mask)
 cv2.waitKey(0)
 cv2.destroyAllWindows()

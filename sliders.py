@@ -2,6 +2,12 @@
 import cv2  
 import numpy as np
 import functions as f
+
+
+#change this to threshold different images
+target_image = "test1.jpg"
+
+
 #trackbar callback fucntion to update HSV value
 def callback(x):
 	global H_low,H_high,S_low,S_high,V_low,V_high
@@ -40,7 +46,7 @@ cv2.createTrackbar('high V','controls',255,255,callback)
 
 while(1):
 	#read source image
-	img=cv2.imread("test1.jpg")
+	img=cv2.imread(target_image)
 	#convert sourece image to HSC color mode
 	hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -57,7 +63,7 @@ while(1):
 
 
 	#show image
-	f.show_image('mask',mask)
+
 	f.show_image('res',res)
 	
 	#waitfor the user to press escape and break the while loop 
