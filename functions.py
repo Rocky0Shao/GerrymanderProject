@@ -12,7 +12,7 @@ def maskForTest1(input_image):
     lower_blue = np.array([85,43,93])
     higher_blue = np.array([130,255,255])
     mask = cv2.inRange(input_image_copy,lower_blue,higher_blue, cv2.THRESH_BINARY)
-    kernal = cv2.getStructuringElement(cv2.MORPH_CROSS,(3,3))
+    kernal = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
     mask = cv2.dilate(mask,kernal,iterations = 3)
     return mask
 
@@ -47,20 +47,30 @@ def convert_contours_to_points(contour):
 
 
 def find_contour_aspect_ratio(contour,color_image):
-    
     box= cv2.minAreaRect(contour)
     points = cv2.boxPoints(box)
     asint = np.int0(points)
     
     if len(asint) > 0:
-        cv2.drawContours(color_image,[asint],0,(255,255,0),5)
+        cv2.drawContours(color_image,[asint],0,(255,255,0),3) #DRAWS BOXES
         center, dimensions, angle= cv2.minAreaRect(contour)
         width,height = dimensions
         
         ratio = height/width
         if ratio > 1: ratio = width/height
-        return ratio*100
+        return ratio*100,width,height
     return 0
+
+def solidityTest(contour):
+    try:
+        center, dimensions, angle= cv2.minAreaRect(contour)
+        width,height = dimensions
+        
+        bounding_area = width * height
+        area_of_contour = cv2.contourArea(contour)
+        return area_of_contour / bounding_area
+    except:
+        return 0
 
 def find_contour_length(contour):
     contour_length = cv2.arcLength(contour,True)
