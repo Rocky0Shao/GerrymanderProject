@@ -45,7 +45,6 @@ high_V = 255
 
 
 
-mask = f.maskForTest1(input_image,low_H,high_H,low_S,high_S,low_V,high_V)
 
 mask = f.generate_mask(input_image,low_H,high_H,low_S,high_S,low_V,high_V)
 
