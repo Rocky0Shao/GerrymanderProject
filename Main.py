@@ -1,80 +1,102 @@
-import cv2 
+#import opencv and numpy
+import cv2  
 import numpy as np
 import functions as f
 
 
-#this file should take in test1.jpg and return the contiguos, compactness of the blue districts.
-
-# input_image = cv2.imread("test1.jpg")
-# low_H = 85
-# high_H = 130
-# low_S = 43
-# high_S = 255
-# low_V = 93
-# high_V = 255
-
-
-
-# input_image = cv2.imread("test2.jpg")
-# low_H = 0
-# high_H = 255
-# low_S = 77
-# high_S = 255
-# low_V = 0
-# high_V = 255
-
-
-
-# input_image = cv2.imread("test3.jpg")
-# low_H = 53
-# high_H = 129
-# low_S = 60
-# high_S = 255
-# low_V = 0
-# high_V = 255
-
-# input_image = cv2.imread("test4.jpg")
-# low_H = 0
-# high_H = 3
-# low_S = 17
-# high_S = 255
-# low_V = 0
-# high_V = 255
-
-input_image = cv2.imread("test4.jpg")
-low_H = 0
-high_H = 3
-low_S = 17
-high_S = 255
-low_V = 0
-high_V = 255
+#change this to threshold different images
+target_image = "test4.jpg"
 
 
 
 
+#trackbar callback fucntion to update HSV value
+def callback(x):
+	global H_low,H_high,S_low,S_high,V_low,V_high,show_district_center,show_district_box,show_ideal_circle,puttext,draw_contour
+	#assign trackbar position value to H,S,V High and low variable
+	H_low = cv2.getTrackbarPos('low H','controls')
+	H_high = cv2.getTrackbarPos('high H','controls')
+	S_low = cv2.getTrackbarPos('low S','controls')
+	S_high = cv2.getTrackbarPos('high S','controls')
+	V_low = cv2.getTrackbarPos('low V','controls')
+	V_high = cv2.getTrackbarPos('high V','controls')
+	show_district_center = cv2.getTrackbarPos('show_center','controls')
+	show_district_box = cv2.getTrackbarPos('show_box','controls')
+	show_ideal_circle = cv2.getTrackbarPos('show_circle','controls')
+	puttext = cv2.getTrackbarPos('put_text','controls')
+	draw_contour=cv2.getTrackbarPos('draw_contour','controls')
+	
 
 
-mask = f.generate_mask(input_image,low_H,high_H,low_S,high_S,low_V,high_V)
-
-contours,_=cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-contours = f.sort_contours(contours)
-for contour in contours:
-    try:
-        cv2.drawContours(input_image,[contour],0,(0,0,0),3)
-        aspect_ratio,width,height = f.find_contour_aspect_ratio(contour,input_image)
-        circle_of_contor_radius = f.find_contour_circle_radius(contour)
-        center = f.find_contour_center(contour)
-        cv2.circle(input_image, center, 5, (0,0,155), -1)
-        cv2.circle(input_image,center,circle_of_contor_radius,(233,0,155),3)
-        x,y = center
-        cv2.putText(input_image,f.format_num( float(f"{aspect_ratio}")), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
-        solidity = f.solidityTest(contour)
-        cv2.putText(input_image, f.format_num(float(f"{solidity}")*100), (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
-        break
-    except:
-        continue
+#create a seperate window named 'controls' for trackbar
+cv2.namedWindow('controls',2)
+cv2.resizeWindow("controls", 550,10)
 
 
-cv2.imshow("input_image",input_image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+#global variable
+H_low = 0
+H_high = 180
+S_low= 0
+S_high = 255
+V_low= 0
+V_high = 255
+
+show_district_center = 0
+show_district_box = 0
+show_ideal_circle = 0
+draw_contour = 0
+puttext = 0
+
+#create trackbars for high,low H,S,V 
+cv2.createTrackbar('low H','controls',0,180,callback)
+cv2.createTrackbar('high H','controls',180,180,callback)
+
+cv2.createTrackbar('low S','controls',0,255,callback)
+cv2.createTrackbar('high S','controls',255,255,callback)
+
+cv2.createTrackbar('low V','controls',0,255,callback)
+cv2.createTrackbar('high V','controls',255,255,callback)
+
+cv2.createTrackbar('draw_contour','controls',0,1,callback)
+cv2.createTrackbar('show_box','controls',0,1,callback)
+cv2.createTrackbar('show_circle','controls',0,1,callback)
+cv2.createTrackbar('show_center','controls',0,1,callback)
+cv2.createTrackbar('put_text','controls',0,1,callback)
+
+
+
+while(1):
+	#read source image
+	img=cv2.imread(target_image)
+	#convert sourece image to HSC color mode
+	mask = f.generate_mask(img,H_low,H_high,S_low,S_high,V_low,V_high)
+	#masking HSV value selected color becomes black
+	res = cv2.bitwise_and(img, img, mask=mask)
+
+
+
+	#show image
+
+	# f.show_image('res',res)
+	contours,_=cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
+	biggest_contour = f.find_biggest_contour(contours)
+	if draw_contour ==1:
+		cv2.drawContours(img,[biggest_contour],0,(0,0,0),3)
+	if show_district_box ==1:
+		aspect_ratio,width,height = f.find_contour_aspect_ratio(biggest_contour,img)
+	circle_of_contor_radius = f.find_contour_circle_radius(biggest_contour)
+	center = f.find_contour_center(biggest_contour)
+	if show_district_center==1:
+		cv2.circle(img, center, 5, (0,0,155), -1)
+	if show_ideal_circle == 1:
+		cv2.circle(img,center,circle_of_contor_radius,(233,0,155),3)
+	x,y = center
+	solidity = f.solidityTest(biggest_contour)
+	if puttext ==1:
+		cv2.putText(img, f.format_num(float(f"{solidity}")*100), (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+		cv2.putText(img,f.format_num( float(f"{aspect_ratio}")), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+	Verti = np.concatenate((res, img), axis=0)
+	# f.show_image('input',img)
+	f.show_image('output',Verti)
+
+	cv2.waitKey(1)
