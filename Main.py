@@ -33,6 +33,14 @@ import functions as f
 # low_V = 0
 # high_V = 255
 
+# input_image = cv2.imread("test4.jpg")
+# low_H = 0
+# high_H = 3
+# low_S = 17
+# high_S = 255
+# low_V = 0
+# high_V = 255
+
 input_image = cv2.imread("test4.jpg")
 low_H = 0
 high_H = 3
