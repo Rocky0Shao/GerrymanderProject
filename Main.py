@@ -5,7 +5,7 @@ import functions as f
 
 
 #change this to threshold different images
-target_image = "test4.jpg"
+target_image = "test3.jpg"
 
 
 
@@ -66,37 +66,40 @@ cv2.createTrackbar('put_text','controls',0,1,callback)
 
 
 while(1):
+	try:
 	#read source image
-	img=cv2.imread(target_image)
-	#convert sourece image to HSC color mode
-	mask = f.generate_mask(img,H_low,H_high,S_low,S_high,V_low,V_high)
-	#masking HSV value selected color becomes black
-	res = cv2.bitwise_and(img, img, mask=mask)
+		img=cv2.imread(target_image)
+		#convert sourece image to HSC color mode
+		mask = f.generate_mask(img,H_low,H_high,S_low,S_high,V_low,V_high)
+		#masking HSV value selected color becomes black
+		res = cv2.bitwise_and(img, img, mask=mask)
 
 
 
-	#show image
+		#show image
 
-	# f.show_image('res',res)
-	contours,_=cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-	biggest_contour = f.find_biggest_contour(contours)
-	if draw_contour ==1:
-		cv2.drawContours(img,[biggest_contour],0,(0,0,0),3)
-	if show_district_box ==1:
-		aspect_ratio,width,height = f.find_contour_aspect_ratio(biggest_contour,img)
-	circle_of_contor_radius = f.find_contour_circle_radius(biggest_contour)
-	center = f.find_contour_center(biggest_contour)
-	if show_district_center==1:
-		cv2.circle(img, center, 5, (0,0,155), -1)
-	if show_ideal_circle == 1:
-		cv2.circle(img,center,circle_of_contor_radius,(233,0,155),3)
-	x,y = center
-	solidity = f.solidityTest(biggest_contour)
-	if puttext ==1:
-		cv2.putText(img, f.format_num(float(f"{solidity}")*100), (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
-		cv2.putText(img,f.format_num( float(f"{aspect_ratio}")), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
-	Verti = np.concatenate((res, img), axis=0)
-	# f.show_image('input',img)
-	f.show_image('output',Verti)
+		# f.show_image('res',res)
+		contours,_=cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
+		biggest_contour = f.find_biggest_contour(contours)
+		if draw_contour ==1:
+			cv2.drawContours(img,[biggest_contour],0,(0,0,0),3)
+		if show_district_box ==1:
+			aspect_ratio,width,height = f.find_contour_aspect_ratio(biggest_contour,img)
+		circle_of_contor_radius = f.find_contour_circle_radius(biggest_contour)
+		center = f.find_contour_center(biggest_contour)
+		if show_district_center==1:
+			cv2.circle(img, center, 5, (0,0,155), -1)
+		if show_ideal_circle == 1:
+			cv2.circle(img,center,circle_of_contor_radius,(233,0,155),3)
+		x,y = center
+		solidity = f.solidityTest(biggest_contour)
+		if puttext ==1:
+			cv2.putText(img, f.format_num(float(f"{solidity}")*100), (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+			cv2.putText(img,f.format_num( float(f"{aspect_ratio}")), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+		Verti = np.concatenate((res, img), axis=0)
+		# f.show_image('input',img)
+		f.show_image('output',Verti)
 
-	cv2.waitKey(1)
+		cv2.waitKey(1)
+	except:
+		continue
