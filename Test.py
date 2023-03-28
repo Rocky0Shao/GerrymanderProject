@@ -57,11 +57,12 @@ cv2.createTrackbar('high S','controls',255,255,callback)
 cv2.createTrackbar('low V','controls',0,255,callback)
 cv2.createTrackbar('high V','controls',255,255,callback)
 
+cv2.createTrackbar('draw_contour','controls',0,1,callback)
 cv2.createTrackbar('show_box','controls',0,1,callback)
 cv2.createTrackbar('show_circle','controls',0,1,callback)
 cv2.createTrackbar('show_center','controls',0,1,callback)
 cv2.createTrackbar('put_text','controls',0,1,callback)
-cv2.createTrackbar('draw_contour','controls',0,1,callback)
+
 
 
 while(1):
@@ -76,7 +77,7 @@ while(1):
 
 	#show image
 
-	f.show_image('res',res)
+	# f.show_image('res',res)
 	contours,_=cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
 	biggest_contour = f.find_biggest_contour(contours)
 	if draw_contour ==1:
@@ -94,6 +95,8 @@ while(1):
 	if puttext ==1:
 		cv2.putText(img, f.format_num(float(f"{solidity}")*100), (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
 		cv2.putText(img,f.format_num( float(f"{aspect_ratio}")), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
-	f.show_image('input',img)
+	Verti = np.concatenate((res, img), axis=0)
+	# f.show_image('input',img)
+	f.show_image('output',Verti)
 
 	cv2.waitKey(1)
