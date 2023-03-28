@@ -2,7 +2,6 @@
 import cv2  
 import numpy as np
 import functions as f
-import time
 
 #change this to test different images
 target_image = "test5.jpg"
@@ -102,5 +101,4 @@ while(1):
 
 		cv2.waitKey(1)
 	except:
-		time.sleep(0.5)
 		continue
