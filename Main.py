@@ -2,17 +2,17 @@
 import cv2  
 import numpy as np
 import functions as f
+import time
 
-
-#change this to threshold different images
-target_image = "test3.jpg"
+#change this to test different images
+target_image = "test5.jpg"
 
 
 
 
 #trackbar callback fucntion to update HSV value
 def callback(x):
-	global H_low,H_high,S_low,S_high,V_low,V_high,show_district_center,show_district_box,show_ideal_circle,puttext,draw_contour
+	global H_low,H_high,S_low,S_high,V_low,V_high,show_center,show_box,show_circle,puttext,draw_contour
 	#assign trackbar position value to H,S,V High and low variable
 	H_low = cv2.getTrackbarPos('low H','controls')
 	H_high = cv2.getTrackbarPos('high H','controls')
@@ -20,9 +20,9 @@ def callback(x):
 	S_high = cv2.getTrackbarPos('high S','controls')
 	V_low = cv2.getTrackbarPos('low V','controls')
 	V_high = cv2.getTrackbarPos('high V','controls')
-	show_district_center = cv2.getTrackbarPos('show_center','controls')
-	show_district_box = cv2.getTrackbarPos('show_box','controls')
-	show_ideal_circle = cv2.getTrackbarPos('show_circle','controls')
+	show_center = cv2.getTrackbarPos('show_center','controls')
+	show_box = cv2.getTrackbarPos('show_box','controls')
+	show_circle = cv2.getTrackbarPos('show_circle','controls')
 	puttext = cv2.getTrackbarPos('put_text','controls')
 	draw_contour=cv2.getTrackbarPos('draw_contour','controls')
 	
@@ -41,9 +41,9 @@ S_high = 255
 V_low= 0
 V_high = 255
 
-show_district_center = 0
-show_district_box = 0
-show_ideal_circle = 0
+show_center = 0
+show_box = 0
+show_circle = 0
 draw_contour = 0
 puttext = 0
 
@@ -83,13 +83,13 @@ while(1):
 		biggest_contour = f.find_biggest_contour(contours)
 		if draw_contour ==1:
 			cv2.drawContours(img,[biggest_contour],0,(0,0,0),3)
-		if show_district_box ==1:
+		if show_box ==1:
 			aspect_ratio,width,height = f.find_contour_aspect_ratio(biggest_contour,img)
 		circle_of_contor_radius = f.find_contour_circle_radius(biggest_contour)
 		center = f.find_contour_center(biggest_contour)
-		if show_district_center==1:
+		if show_center==1:
 			cv2.circle(img, center, 5, (0,0,155), -1)
-		if show_ideal_circle == 1:
+		if show_circle == 1:
 			cv2.circle(img,center,circle_of_contor_radius,(233,0,155),3)
 		x,y = center
 		solidity = f.solidityTest(biggest_contour)
@@ -102,4 +102,5 @@ while(1):
 
 		cv2.waitKey(1)
 	except:
+		time.sleep(0.5)
 		continue
