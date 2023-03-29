@@ -11,20 +11,20 @@ target_image = "test5.jpg"
 
 #trackbar callback fucntion to update HSV value
 def callback(x):
-	global H_low,H_high,S_low,S_high,V_low,V_high,show_center,show_box,show_circle,puttext,draw_contour
-	#assign trackbar position value to H,S,V High and low variable
-	H_low = cv2.getTrackbarPos('low H','controls')
-	H_high = cv2.getTrackbarPos('high H','controls')
-	S_low = cv2.getTrackbarPos('low S','controls')
-	S_high = cv2.getTrackbarPos('high S','controls')
-	V_low = cv2.getTrackbarPos('low V','controls')
-	V_high = cv2.getTrackbarPos('high V','controls')
-	show_center = cv2.getTrackbarPos('show_center','controls')
-	show_box = cv2.getTrackbarPos('show_box','controls')
-	show_circle = cv2.getTrackbarPos('show_circle','controls')
-	puttext = cv2.getTrackbarPos('put_text','controls')
-	draw_contour=cv2.getTrackbarPos('draw_contour','controls')
-	
+    global H_low,H_high,S_low,S_high,V_low,V_high,show_district_center,show_district_box,show_ideal_circle,puttext,draw_contour
+    #assign trackbar position value to H,S,V High and low variable
+    H_low = cv2.getTrackbarPos('low H','controls')
+    H_high = cv2.getTrackbarPos('high H','controls')
+    S_low = cv2.getTrackbarPos('low S','controls')
+    S_high = cv2.getTrackbarPos('high S','controls')
+    V_low = cv2.getTrackbarPos('low V','controls')
+    V_high = cv2.getTrackbarPos('high V','controls')
+    show_district_center = cv2.getTrackbarPos('show_center','controls')
+    show_district_box = cv2.getTrackbarPos('show_box','controls')
+    show_ideal_circle = cv2.getTrackbarPos('show_circle','controls')
+    puttext = cv2.getTrackbarPos('put_text','controls')
+    draw_contour=cv2.getTrackbarPos('draw_contour','controls')
+
 
 
 #create a seperate window named 'controls' for trackbar
@@ -63,47 +63,53 @@ cv2.createTrackbar('show_center','controls',0,1,callback)
 cv2.createTrackbar('put_text','controls',0,1,callback)
 
 
-
+print("got here")
 while(1):
-	try:
-		if H_low <= H_high and  S_low <= S_high and V_low <= V_high:
-			#read source image
-			img=cv2.imread(target_image)
-			#convert sourece image to HSC color mode
-			mask = f.generate_mask(img,H_low,H_high,S_low,S_high,V_low,V_high)
-			#masking HSV value selected color becomes black
-			res = cv2.bitwise_and(img, img, mask=mask)
+  try:
+      #read source image
+      img=cv2.imread(target_image)
+      #convert sourece image to HSC color mode
+      mask = f.generate_mask(img,H_low,H_high,S_low,S_high,V_low,V_high)
+      #masking HSV value selected color becomes black
+      res = cv2.bitwise_and(img, img, mask=mask)
 
 
 
-			#show image
+      #show image
 
-			# f.show_image('res',res)
-			contours,_=cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-			if len(contours) >0:
-				biggest_contour = f.find_biggest_contour(contours)
-				if draw_contour ==1:
-					cv2.drawContours(img,[biggest_contour],0,(0,0,0),3)
-				if show_box ==1:
-					aspect_ratio,width,height = f.find_contour_aspect_ratio(biggest_contour,img)
-				circle_of_contor_radius = f.find_contour_circle_radius(biggest_contour)
-				center = f.find_contour_center(biggest_contour)
-				if show_center==1:
-					cv2.circle(img, center, 5, (0,0,155), -1)
-				if show_circle == 1:
-					cv2.circle(img,center,circle_of_contor_radius,(233,0,155),3)
-				x,y = center
-				solidity = f.solidityTest(biggest_contour)
-				if puttext ==1:
-					cv2.putText(img, f.format_num(float(f"{solidity}")*100), (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
-					cv2.putText(img,f.format_num( float(f"{aspect_ratio}")), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
-				Verti = np.concatenate((res, img), axis=0)
-				# f.show_image('input',img)
-				f.show_image('output',Verti)
+      # f.show_image('res',res)
 
-				cv2.waitKey(1)
-			else:
-				pass
-	except RuntimeError:
-		break
-print("crashed!  :(")
+      contours, hierarchy=cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+      biggest_contour, biggest_contour_index = f.find_biggest_contour(contours)
+      aspect_ratio, width,height = f.find_contour_aspect_ratio(biggest_contour,img, False)
+
+      if draw_contour ==1:
+          for c in contours:
+              cv2.drawContours(img,[c],0,(0,0,0),3)
+
+      if show_district_box ==1:
+          aspect_ratio,width,height = f.find_contour_aspect_ratio(biggest_contour,img)
+
+      circle_of_contor_radius = f.find_contour_circle_radius(biggest_contour)
+      center = f.find_contour_center(biggest_contour)
+
+      if show_district_center==1:
+          cv2.circle(img, center, 5, (0,0,155), -1)
+
+      if show_ideal_circle == 1:
+          cv2.circle(img,center,circle_of_contor_radius,(233,0,155),3)
+
+      x,y = center
+      solidity = f.solidityTest(biggest_contour_index, img, contours, hierarchy, True)
+
+      if puttext ==1:
+
+          cv2.putText(img, "Solidity score:"+ f.format_num(float(f"{solidity}")*100), (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+          cv2.putText(img,"Contiguousness score:"+ f.format_num( float(f"{aspect_ratio}")), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+      Verti = np.concatenate((res, img), axis=0)
+      # f.show_image('input',img)
+      f.show_image('output',Verti)
+      cv2.waitKey(1)
+    except:
+      continue
+

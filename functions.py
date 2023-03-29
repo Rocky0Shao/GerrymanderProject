@@ -24,9 +24,12 @@ def find_contour_circle_radius(contour):
     return int(contour_circle_radius)
 
 def find_biggest_contour(contours):
-    sortedContours = sorted(contours, key=lambda contour: -cv2.contourArea(contour))
-    biggest_contour=sortedContours[0]
-    return biggest_contour
+    """RETURNS THE CONTOUR, AND THEN THE INDEX OF SAID CONTOUR"""
+    biggest = 0
+    for x in range(len(contours)):
+        if cv2.contourArea(contours[x]) > cv2.contourArea(contours[biggest]):
+            biggest = x
+    return contours[biggest], biggest
 
 def sort_contours(contours):
     sortedContours = sorted(contours, key=lambda contour: -cv2.contourArea(contour))
@@ -57,13 +60,14 @@ def convert_contours_to_points(contour):
 '''get the point on the ground'''
 
 
-def find_contour_aspect_ratio(contour,color_image):
+def find_contour_aspect_ratio(contour,color_image, draw=True):
     box= cv2.minAreaRect(contour)
     points = cv2.boxPoints(box)
     asint = np.int0(points)
     
     if len(asint) > 0:
-        cv2.drawContours(color_image,[asint],0,(255,255,0),3) #DRAWS BOXES
+        if draw:
+            cv2.drawContours(color_image,[asint],0,(255,255,0),3) #DRAWS BOXES
         center, dimensions, angle= cv2.minAreaRect(contour)
         width,height = dimensions
         try:
@@ -74,16 +78,37 @@ def find_contour_aspect_ratio(contour,color_image):
             return 0
     return 0
 
-def solidityTest(contour):
+def solidityTest(contourindex, colorimg, contours, hierarchy, draw = True):
+    solidity = 0
+    current_contour = contours[contourindex]
+
+    if draw:
+        cv2.drawContours(colorimg, current_contour,0,(255,255,0),3)
     try:
-        center, dimensions, angle= cv2.minAreaRect(contour)
+        center, dimensions, angle= cv2.minAreaRect(current_contour)
         width,height = dimensions
         
         bounding_area = width * height
-        area_of_contour = cv2.contourArea(contour)
-        return area_of_contour / bounding_area
+        area_of_contour = cv2.contourArea(current_contour)
     except:
-        return 0
+        pass
+
+    if hierarchy[0][contourindex][2] != -1:
+            # Iterate through child contours
+            child = hierarchy[0][contourindex][2]
+            while child != -1:
+                # Access child contour and do something with it
+                child_contour = contours[child]
+
+                cv2.drawContours(colorimg, child_contour,0,(255,255,0),3)
+                area_of_contour -= cv2.contourArea(child_contour)
+                # Move to next child contour
+                child = hierarchy[0][child][0]
+    
+    solidity = area_of_contour / bounding_area
+    return solidity
+
+
 
 def find_contour_length(contour):
     contour_length = cv2.arcLength(contour,True)
