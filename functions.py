@@ -31,6 +31,12 @@ def find_biggest_contour(contours):
             biggest = x
     return contours[biggest], biggest
 
+
+def find_contour_containing_point(currentindex, contours, hierarchy, clickpoint):
+    for i in range(len(contours)):
+        if cv2.pointPolygonTest(contours[i], clickpoint, False) > 0:
+            return contours[i], i
+    return None
 def sort_contours(contours):
     sortedContours = sorted(contours, key=lambda contour: -cv2.contourArea(contour))
     
