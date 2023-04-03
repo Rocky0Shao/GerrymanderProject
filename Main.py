@@ -25,7 +25,7 @@ def callback(x):
     show_ideal_circle = cv2.getTrackbarPos('show_circle','controls')
     puttext = cv2.getTrackbarPos('put_text','controls')
     draw_contour=cv2.getTrackbarPos('draw_contour','controls')
-    
+#use mouse clicking 
 def mouseCallback(event, x, y, flags, param):
     global clickpoint
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -67,7 +67,7 @@ cv2.createTrackbar('high S','controls',255,255,callback)
 
 cv2.createTrackbar('low V','controls',0,255,callback)
 cv2.createTrackbar('high V','controls',255,255,callback)
-
+#create sliders for output events
 cv2.createTrackbar('draw_contour','controls',0,1,callback)
 cv2.createTrackbar('show_box','controls',0,1,callback)
 cv2.createTrackbar('show_circle','controls',0,1,callback)
@@ -125,9 +125,13 @@ while(1):
             cv2.putText(img, "Solidity score:"+ f.format_num(float(f"{solidity}")*100), (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
             cv2.putText(img,"Contiguousness score:"+ f.format_num( float(f"{aspect_ratio}")), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
         # Verti = np.concatenate((res, img), axis=0)
+		#show the output image
         f.show_image('output',img)
+        #show wich district you chose
         f.show_image('input',res)
+        #add mouse clicking
         cv2.setMouseCallback("output", mouseCallback)
+        #each frame is frozen by 1 milisecond before the next frame is shown
         cv2.waitKey(1)
     except:
         pass
