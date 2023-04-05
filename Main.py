@@ -112,7 +112,7 @@ while(1):
             compactness = f.find_compactness(biggest_contour)
             cv2.putText(img,"Compactness:"+ f.format_num(compactness*100)+'%', (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
             solidity = f.solidityTest(biggest_contour_index, img, contours, hierarchy, True)
-            cv2.putText(img,"Solidity:"+ f.format_num(solidity*100)+'%', (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+            cv2.putText(img,"Solidity:"+ f.format_num(solidity*100)+'%', (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
             # cv2.putText(img,"Contiguousness:"+ f.format_num(), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
  
 
