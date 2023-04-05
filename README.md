@@ -11,27 +11,6 @@ This is a gerrymander project for Precal (Shaun)
         (1) the contiguos of this district
         (2) the compactness of this district
     
-<<<<<<< HEAD
-Setup:
-    1.Download python 3 on https://www.python.org/downloads/
-    2.Download vscode at https://code.visualstudio.com/download
-    3.Create a new empty folder
-    4.Click on the folder, then right click the folder, select "open in terminal"
-    5.Type in the following commands in the terminal:
-            (1):    git clone https://github.com/Rocky0Shao/GerrymanderProject.git
-            (2):    pip install opencv-python
-    You're ready to go!
-
-Math:
-    1. For Compactness:
-        (1): For a circle, the compactness will be 1
-        (2): The general formula: 4pi * (A/P^2), where A is the area of the district, P is the parameter of the district
-        (3): For visualizatoin, will draw a circle on the district. 
-             The circle has the same area as the district, and centered at the center of the district
-    
-             
-
-=======
 ### Setup:
     1.download python 3 <br>
     2.download an IDE that supports python <br>
@@ -58,17 +37,20 @@ and the consolidation of power in the hands of a select few.
 
 Our program aims to allow the user to input an image of a voting district and establish the values of the contiguous and solidity of the district.
 
-We define solidity as the area of a contour subtracted by the areas of all child contours, divided by the area of the parent contour's convex hull.
+We define solidity as the area of a contour subtracted by the areas of all child contours, divided by the area of the parent contour's 
+onvex hull.
 If we have parent contour $C_p$, $n$ child contours denoted by $C_c$, and the convex hull of the parent contour, $H$, solidity would be defined as:
 $$\frac {\left(C_p - \left({C_{c_1}}+ {C_{c_2}}+ {C_{c_3}}+\dots +{C_{c_n}}\right)\right)} {H}$$
 
 A convex hull is a boundary which a line segment connecting any two points within the boundary does not intersect the boundary.
 
+Compactness of a voting district is measured in a different way. 
+If the shape of the voting district is a perfect circle, the compactness will be 100%.
+The general formula for compactness is: 4pi * (A/P^2), where A is the area of the district and P is the parameter of the district.
+For visualizatoin, a circle that has the same area as the distric will appear upon the district
 
 These values will allow the user to then calculate whether or not the district has fallen victim to political gerrymandering or not.  
 In addition, the program can aid the user in determining what group or groups have been suppressed.  
-
-
 
 
 We hope that our program can lead to the removal of gerrymandered voting districts and the unfair representation of minority groups and communities.  
