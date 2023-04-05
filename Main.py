@@ -44,7 +44,6 @@ S_low= 0
 S_high = 255
 V_low= 0
 V_high = 255
-show_district_center = 0
 show_district_box = 0
 show_ideal_circle = 0
 draw_contour = 0
@@ -105,19 +104,21 @@ while(1):
 
         if show_ideal_circle == 1:
             circle_of_contor_radius = f.find_contour_circle_radius(biggest_contour)
-            cv2.circle(img,center,circle_of_contor_radius,(233,0,155),3)
-            
+            cv2.circle(img,center,circle_of_contor_radius,(233,0,155),10)
+        
+        solidity = f.solidityTest(biggest_contour_index, img, contours, hierarchy, True)
         if puttext ==1:
             x,y = center
-            cv2.putText(img,"Compactness:"+ f.format_num(), (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
-            cv2.putText(img,"Contiguousness:"+ f.format_num(), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+            compactness = f.find_compactness(biggest_contour)
+            cv2.putText(img,"Compactness:"+ f.format_num(compactness*100)+'%', (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+            # cv2.putText(img,"Contiguousness:"+ f.format_num(), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
  
 
 		#show the output image
         f.show_image('output',img)
 
         #show wich district you chose
-        f.show_image('input',res)
+        f.show_image('Possible_Districts',res)
 
         #add mouse clicking
         cv2.setMouseCallback("output", mouseCallback)
