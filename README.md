@@ -57,4 +57,4 @@ We hope that our program can lead to the removal of gerrymandered voting distric
 In turn, this will allow us to hold fair and impartial elections and promote greater transparency and acountability in the political process.  
 We believe that developing a reliable and accurate tool to detect gerrymandering, 
 we can ensure that all voices are heard and all communities are represented fairly in our democracy. 
->>>>>>> f3c5d4f227f8e1c548d3619b2cf802223fdc14c2
+
