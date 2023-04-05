@@ -75,7 +75,7 @@ def find_contour_aspect_ratio(contour,color_image, draw=True):
     
     if len(asint) > 0:
         if draw:
-            cv2.drawContours(color_image,[asint],0,(255,255,0),3) #DRAWS BOXES
+            cv2.drawContours(color_image,[asint],0,(255,255,0),10) #DRAWS BOXES
         center, dimensions, angle= cv2.minAreaRect(contour)
         width,height = dimensions
         try:
