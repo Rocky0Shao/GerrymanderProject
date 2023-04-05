@@ -12,6 +12,7 @@ In addition, the program can aid the user in determining what group or groups ha
 
 We hope that our program can lead to the removal of gerrymandered voting districts and the unfair representation of minority groups and communities.  
 In turn, this will allow us to hold fair and impartial elections and promote greater transparency and acountability in the political process.  
-We believe that developing a reliable and accurate tool to detect gerrymandering, we can ensure that all voices are heard and all communities are represented fairly in our democracy. 
+We believe that developing a reliable and accurate tool to detect gerrymandering, 
+we can ensure that all voices are heard and all communities are represented fairly in our democracy. 
 
 Author: Lucas Mattingly

@@ -79,8 +79,14 @@ def solidityTest(contourindex, colorimg, contours, hierarchy, draw = True):
     try:
         center, dimensions, angle= cv2.minAreaRect(current_contour)
         width,height = dimensions
+
+        convexhull = cv2.convexHull(current_contour)
         
         bounding_area = width * height
+
+        bounding_area = cv2.contourArea(convexhull)
+        cv2.drawContours(colorimg, [convexhull],0,(255,255,0),3)
+
         area_of_contour = cv2.contourArea(current_contour)
     except:
         pass
