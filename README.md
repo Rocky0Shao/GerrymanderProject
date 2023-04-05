@@ -13,13 +13,15 @@ This is a gerrymander project for Precal (Shaun)
         (3) the solidity of this district
     
 ### Setup:
-    1.download python 3 <br>
-    2.download an IDE that supports python <br>
-    3.create a new empty folder <br>
-    4.right click the folder, select "open in terminal" <br>
+    1.download python 3 at https://www.python.org/downloads/
+    2.download an IDE that supports python 
+    3.create a new empty folder 
+    4.click on the folder once, then right click the folder, select "open in terminal" 
     5.type in the following commands in the terminal:
             (1):    git clone   https://github.com/Rocky0Shao/GerrymanderProject.git
             (2):    pip install opencv-python
+### Demo
+<video src="Readme_imgs\Demo.mps" width="320" height="240" controls>
 
 ### GUI
 <img src = "Readme_imgs\GUI.png">
