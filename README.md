@@ -35,7 +35,7 @@ It can result in the unfair representation of certain communities, the suppressi
 and the consolidation of power in the hands of a select few.  
 
 
-Our program aims to allow the user to input an image of a voting district and establish the values of the contiguous and solidity of the district.
+Our program aims to allow the user to input an image of a voting district and establish the values of the contiguous, compactness and solidity of the district.
 
 We define solidity as the area of a contour subtracted by the areas of all child contours, divided by the area of the parent contour's 
 onvex hull.
@@ -46,7 +46,7 @@ A convex hull is a boundary which a line segment connecting any two points withi
 
 Compactness of a voting district is measured in a different way. 
 If the shape of the voting district is a perfect circle, the compactness will be 100%.
-The general formula for compactness is: 4pi * (A/P^2), where A is the area of the district and P is the parameter of the district.
+The general formula for compactness is: 4π * (A/P²), where A is the area of the district and P is the parameter of the district.
 For visualizatoin, a circle that has the same area as the distric will appear upon the district
 
 These values will allow the user to then calculate whether or not the district has fallen victim to political gerrymandering or not.  

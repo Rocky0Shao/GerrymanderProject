@@ -98,19 +98,22 @@ while(1):
             for c in contours:
                 cv2.drawContours(img,[c],0,(255,255,255),10)
 
-        #This shows the box of the 
+        #This shows the bounding rectangle of the target district
         if show_district_box ==1:
             aspect_ratio,width,height = f.find_contour_aspect_ratio(biggest_contour,img)
 
+        #This shows the circle centered at the center of the district, also having the same area as the district
         if show_ideal_circle == 1:
             circle_of_contor_radius = f.find_contour_circle_radius(biggest_contour)
             cv2.circle(img,center,circle_of_contor_radius,(233,0,155),10)
         
-        
+        #This calculates the compactness and soidity of the district
         if puttext ==1:
             x,y = center
+
             compactness = f.find_compactness(biggest_contour)
             cv2.putText(img,"Compactness:"+ f.format_num(compactness*100)+'%', (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+
             solidity = f.solidityTest(biggest_contour_index, img, contours, hierarchy, True)
             cv2.putText(img,"Solidity:"+ f.format_num(solidity*100)+'%', (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
             # cv2.putText(img,"Contiguousness:"+ f.format_num(), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
