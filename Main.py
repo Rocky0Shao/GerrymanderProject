@@ -117,7 +117,6 @@ while(1):
 
             compactness = f.find_compactness(biggest_contour)
             cv2.putText(img,"Compactness:"+ f.format_num(compactness*100)+'%', (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
-            # cv2.putText(img,"Contiguousness:"+ f.format_num(), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
  
 
 		#show the output image
