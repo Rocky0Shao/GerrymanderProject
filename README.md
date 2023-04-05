@@ -28,9 +28,19 @@ It can result in the unfair representation of certain communities, the suppressi
 and the consolidation of power in the hands of a select few.  
 
 
-Our program aims to allow the user to input an image of a voting district and establish the values of the contiguous and compactness of the district.
+Our program aims to allow the user to input an image of a voting district and establish the values of the contiguous and solidity of the district.
+
+We define solidity as the area of a contour subtracted by the areas of all child contours, divided by the area of the parent contour's convex hull.
+If we have parent contour $C_p$, $n$ child contours denoted by $C_c$, and the convex hull of the parent contour, $H$, solidity would be defined as:
+$$\frac {\left(C_p - \sum_{1}^{n} {C_c}\right)} {H}$$
+
+A convex hull is a boundary which a line segment connecting any two points within the boundary does not intersect the boundary.
+
+
 These values will allow the user to then calculate whether or not the district has fallen victim to political gerrymandering or not.  
 In addition, the program can aid the user in determining what group or groups have been suppressed.  
+
+
 
 
 We hope that our program can lead to the removal of gerrymandered voting districts and the unfair representation of minority groups and communities.  
