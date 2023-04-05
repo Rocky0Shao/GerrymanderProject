@@ -20,8 +20,6 @@ This is a gerrymander project for Precal (Shaun)
     5.type in the following commands in the terminal:
             (1):    git clone   https://github.com/Rocky0Shao/GerrymanderProject.git
             (2):    pip install opencv-python
-### Demo
-<video src="Readme_imgs\Demo.mps">
 
 ### GUI
 <img src = "Readme_imgs\GUI.png">
