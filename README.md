@@ -10,6 +10,7 @@ This is a gerrymander project for Precal (Shaun)
     input an image and determine:
         (1) the contiguos of this district
         (2) the compactness of this district
+        (3) the solidity of this district
     
 ### Setup:
     1.download python 3 <br>
