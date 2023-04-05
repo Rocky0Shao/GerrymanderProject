@@ -19,6 +19,12 @@ Members: Gene Wicaksono
             (1):    git clone   https://github.com/Rocky0Shao/GerrymanderProject.git
             (2):    pip install opencv-python
 
+### GUI
+<img src = "Readme_imgs\GUI.png">
+Upon running this program, 3 windows will open. The first has sliders, which allow ou do configure different color filters, and display different elements of our analysis.
+
+ The second is the display window. Upon filtering districts, ideal circles will be drawn along with contiguousness and solidity values. You also have the ability to select different districts by clicking on them. Finally, there is a filtering window. Our filter method relies on an HSV filter for colors. The filter window assists the user in finding their desired HSV thresholds for the districts they wish to analyze.
+ <img src = "Readme_imgs\Selection.png">
 
 ### About:
 Here is our program that can detect the factors of voting districts that contribute to gerrymandering. 
@@ -32,7 +38,7 @@ Our program aims to allow the user to input an image of a voting district and es
 
 We define solidity as the area of a contour subtracted by the areas of all child contours, divided by the area of the parent contour's convex hull.
 If we have parent contour $C_p$, $n$ child contours denoted by $C_c$, and the convex hull of the parent contour, $H$, solidity would be defined as:
-$$\frac {\left(C_p - \sum_{1}^{n} {C_c}\right)} {H}$$
+$$\frac {\left(C_p - \left({C_{c_1}}+ {C_{c_2}}+ {C_{c_3}}+\dots +{C_{c_n}}\right)\right)} {H}$$
 
 A convex hull is a boundary which a line segment connecting any two points within the boundary does not intersect the boundary.
 
