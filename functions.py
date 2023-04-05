@@ -68,8 +68,7 @@ def find_contour_aspect_ratio(contour,color_image, draw=True):
             return 0
     return 0
 
-#this is for determining how well the district fits its bounding rectange, 
-#AKA, how "rectangel" the district is
+#this is the solidity test, explaiined in the README.md
 def solidityTest(contourindex, colorimg, contours, hierarchy, draw = True):
     solidity = 0
     current_contour = contours[contourindex]

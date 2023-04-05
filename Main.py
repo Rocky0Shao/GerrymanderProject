@@ -106,11 +106,13 @@ while(1):
             circle_of_contor_radius = f.find_contour_circle_radius(biggest_contour)
             cv2.circle(img,center,circle_of_contor_radius,(233,0,155),10)
         
-        solidity = f.solidityTest(biggest_contour_index, img, contours, hierarchy, True)
+        
         if puttext ==1:
             x,y = center
             compactness = f.find_compactness(biggest_contour)
             cv2.putText(img,"Compactness:"+ f.format_num(compactness*100)+'%', (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+            solidity = f.solidityTest(biggest_contour_index, img, contours, hierarchy, True)
+            cv2.putText(img,"Solidity:"+ f.format_num(solidity*100)+'%', (x, y+30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
             # cv2.putText(img,"Contiguousness:"+ f.format_num(), (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
  
 
